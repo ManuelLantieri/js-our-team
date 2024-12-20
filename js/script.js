@@ -40,3 +40,52 @@ const teamMembers= [
 
 //DOM ELEMENTS
 const teamContainer = document.querySelector(".team-container")
+const memberFormElm = document.getElementById("member-form")
+const nameElm = document.getElementById("name")
+const roleElm = document.getElementById("role")
+const emailElm = document.getElementById("email")
+const imageElm = document.getElementById("image")
+
+
+//function
+function createCardMember (member){
+    const {name, role, email, img} = member;
+    const card = `
+          <div class="card-team bg-black d-flex">
+              <div class="card_img">
+                  <img src="./${img}" alt="${name}">
+              </div>
+              <div class="card_info text-light p-3 me-4">
+                  <h4><strong>${name}</strong></h4>
+                  <p>${role}</p>
+                  <a id="email" href="#">${email}</a>
+              </div>
+          </div>`;
+    return card;     
+}
+
+//inserisci una caard per ogni membro nuovo
+let listItem = "";
+for(let i = 0; i < teamMembers.length; i++) {
+    const {name, role, email, img} = teamMembers[i];
+    listItem += createCardMember(teamMembers[i])
+}
+
+teamContainer.innerHTML = listItem;
+
+memberFormElm.addEventListener("submit", function(event){
+    event.preventDefault();
+    const name = nameElm.Value;
+    const role = roleElm.value;
+    const email = email.value;
+    const image = imageElm.value;
+    const newMember = {
+        name,
+        role,
+        email,
+        image
+    }
+    teamMembers.push(newMember);
+    const card = createCardMember(newMember);
+    teamContainer.innerHTML += card;
+});
